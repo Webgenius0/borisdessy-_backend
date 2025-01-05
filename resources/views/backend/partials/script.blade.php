@@ -1,4 +1,5 @@
 <!--begin::Global Javascript Bundle(mandatory for all pages)-->
+
 <script src="{{ asset('backend/plugins/global/plugins.bundle.js') }}"></script>
 <script src="{{ asset('backend/js/scripts.bundle.js') }}"></script>
 <!--end::Global Javascript Bundle-->
@@ -27,8 +28,6 @@
 <!--end::Custom Javascript-->
 
 {{-- Main-Resourse start --}}
-<script src="{{ asset('backend/js/jquery-3.7.1.js') }}" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
-    crossorigin="anonymous"></script>
 <script src="{{ asset('backend/js/datatables.min.js') }}"></script>
 <script src="{{ asset('backend/js/sweetalert2@11.js') }}"></script>
 <script src="{{ asset('backend/js/toastr.min.js') }}"></script>
