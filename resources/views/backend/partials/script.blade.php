@@ -28,12 +28,21 @@
 <!--end::Custom Javascript-->
 
 {{-- Main-Resourse start --}}
-<script src="{{ asset('backend/js/datatables.min.js') }}"></script>
+<!-- <script src="{{ asset('backend/js/datatables.min.js') }}"></script> -->
 <script src="{{ asset('backend/js/sweetalert2@11.js') }}"></script>
 <script src="{{ asset('backend/js/toastr.min.js') }}"></script>
 <script src="{{ asset('backend/js/dropify.min.js') }}"></script>
 <script src="{{ asset('backend/js/ckeditor.js') }}"></script>
+<!-- <script src="https://cdn.datatables.net/select/1.3.3/js/dataTables.select.min.js"></script> -->
+
 {{-- Main-Resourse end --}}
+
+
+<!-- DataTables JS -->
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+
+<!-- Responsive DataTables JS -->
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/responsive/2.3.0/js/dataTables.responsive.min.js"></script>
 
 
 {{-- toastr start --}}
@@ -132,5 +141,23 @@
     });
 </script>
 {{-- dropify end --}}
+
+<!-- set csrf token  -->
+<!-- <script>
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+</script> -->
+
+<!-- Classic Editor -->
+<script>
+    ClassicEditor
+        .create(document.querySelector('.ck-editor'))
+        .catch(error => {
+            console.error(error);
+        }); 
+</script>
 
 @stack('script')

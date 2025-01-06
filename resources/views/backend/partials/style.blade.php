@@ -1,3 +1,4 @@
+<script src="{{ asset('backend/js/jquery-3.7.1.js') }}" ></script>
 <!--begin::Fonts(mandatory for all pages)-->
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700" /> <!--end::Fonts-->
 
@@ -7,7 +8,7 @@
 <!--end::Vendor Stylesheets-->
 
 {{-- main resourse start --}}
-<link rel="stylesheet" href="{{ asset('backend/css/datatables.min.css') }}" />
+<!-- <link rel="stylesheet" href="{{ asset('backend/css/datatables.min.css') }}" /> -->
 <link rel="stylesheet" href="{{ asset('backend/css/lineicons.css') }}" />
 <link rel="stylesheet" href="{{ asset('backend/css/bootstrap-icons.css') }}" />
 <link rel="stylesheet" href="{{ asset('backend/css/toastr.css') }}" />
@@ -141,6 +142,12 @@
 </style>
 {{-- toastr end --}}
 
-<script src="{{ asset('backend/js/jquery-3.7.1.js') }}" ></script>
+
+
+<!-- DataTables CSS -->
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
+
+<!-- Responsive DataTables CSS -->
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.3.0/css/responsive.dataTables.min.css">
 
 @stack('style')

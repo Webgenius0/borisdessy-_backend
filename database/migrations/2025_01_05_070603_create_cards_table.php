@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('cards', function (Blueprint $table) {
             $table->id();
             $table->string('card_name');
-            $table->foreignId('platform_id')->constrained()->cascadeOnDelete();
+            $table->string('platform_name');
             $table->string('price');
             $table->string('seller_name');
             $table->string('discount');

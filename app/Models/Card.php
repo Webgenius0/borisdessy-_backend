@@ -7,14 +7,24 @@ use Illuminate\Database\Eloquent\Model;
 class Card extends Model
 {
     protected $fillable = [
-        'user_id',
-        'name',
+        'card_name',
+        'type',
+        'platform_name',
         'price',
-        'image',
         'discount',
-        'platform_id',
+        'seller_name',
         'usage',
         'description',
-        'type',
+        'image',
     ];
+
+    public function countries()
+    {
+        return $this->hasMany(CardCountry::class);
+    }
+
+    public function allPriceValues()
+    {
+        return $this->hasMany(CardAvaiableAmount::class);
+    }
 }

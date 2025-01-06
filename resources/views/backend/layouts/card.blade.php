@@ -54,7 +54,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Adding Card</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close CloseModal" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <form id="CardForm">
@@ -68,7 +68,8 @@
 
                     <div class="mb-3">
                         <label for="type" class="form-label">Card Type</label>
-                        <select class="form-control" name="type" >
+                        <select class="form-control CardType" name="type" >
+                            <option value="">Select Card Type</option>
                             <option value="voucher">Voucher Card</option>
                             <option value="gift">Gift Card</option>
                         </select>
@@ -77,7 +78,7 @@
 
                     <div class="mb-3">
                         <label for="">Select Platform</label>
-                        <select class="form-control" name="platform_id">
+                        <select class="form-control PlatformName" name="platform_name">
                             <option value="">Select Platform</option>
                             @foreach ($platforms as $platform)
                                 <option value="{{ $platform }}">{{ $platform }}</option>
@@ -96,7 +97,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="AvaiableAmount">Avaiable Amount</label>
-                        <select name="value[]" id="AvaiableAmount" class="AvaiableAmount form-control" multiple>
+                        <select name="avaiable_amounts[]" id="AvaiableAmount" class="AvaiableAmount form-control" multiple>
                                 @foreach ($all_price_values as $all_price_value)
                                      <option value="{{ $all_price_value }}">{{ $all_price_value }}</option>
                                 @endforeach
@@ -132,14 +133,15 @@
 
                 <div class="mb-3">
                     <label for="image" class="form-label">Image</label>
-                    <input type="file" class="form-control dropify" id="image" aria-describedby="image" name="image" value="{{old('description')}}" >
+                    <input type="file" id="image" class="dropify" name="image" data-default-file="" />
+                    <img src="" id="imagePreview" style="display: none;" alt="Image Preview" class="img-fluid mt-2">
                 </div>
                   
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" id="submitCardForm">Add Card</button>
+                <button type="button" class="btn btn-secondary CloseModal" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="submitCardForm"></button>
             </div>
 
           
@@ -157,12 +159,12 @@
                             <thead>
                                 <tr>
                                     <th>Serial</th>
+                                    <th>Card Name</th>
                                     <th>Seller Name</th>
                                     <th>Price</th>
-                                    <th>image</th>
                                     <th>discount</th>
-                                    
-                                    <th>Actions</th>
+                                    <th>Action</th>
+                
                                 </tr>
                             </thead>
                             <tbody>
@@ -185,70 +187,177 @@
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
 <script>
-        let editor;
+    let editor;
 
-        ClassicEditor
-            .create( document.querySelector( '#CardDescription' ), {
-            } )
-            .then( newEditor => {
-                editor = newEditor;
-            } )
-            .catch( error => {
-                console.error( error );
-            } );
-        
-</script>
-    <script>
-   
-   
-        $('.AvaiableCountry').select2({
-            placeholder : "Select countries"
-        });
-    
-        $('.AvaiableAmount').select2({
-            placeholder : "Avaiable Amount"
+    ClassicEditor
+        .create(document.querySelector('#CardDescription'), {})
+        .then(newEditor => {
+            editor = newEditor;
+        })
+        .catch(error => {
+            console.error(error);
         });
 
-        $('.SelectPlatform').select2();
-    </script>
+    $('.AvaiableCountry').select2({
+        placeholder: "Select countries"
+    });
 
-    <script>
-        $(function(){
-            $('#submitCardForm').on('click',function(event){
-                event.preventDefault();
+    $('.AvaiableAmount').select2({
+        placeholder: "Available Amount"
+    });
+
+    $(function () {
+        $('#submitCardForm').text('Add Card');
+        let table = $('.data-table').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: "{{ route('card.index') }}",
+            columns: [
+                { data: 'id', name: 'id' },
+                { data: 'card_name', name: 'card_name' },
+                { data: 'seller_name', name: 'seller_name' },
+                { data: 'price', name: 'price' },
+                { data: 'discount', name: 'discount' },
+                { data: 'action', name: 'action', orderable: false, searchable: false },
+            ]
+        });
+
+        $(document).on('click','#submitCardForm', function (event) {
+            event.preventDefault();
+
+            let id = $('#hiddenInput').val();
+            let url = '';
+
+            if (id) {
+                url = "{{ route('card.update', ':id') }}".replace(':id', id);
+            } else {
+                url = "{{ route('card.store') }}";
                 
-                let description = $('#CardDescription').val();
-                console.log(description);
+                $('#imagePreview').hide();
+            }
 
-                console.log(editor.getData());
-                
+            let formData = new FormData($('#CardForm')[0]);
+            formData.append('description', editor.getData()); 
 
-
-                let formData = new FormData($('#CardForm')[0]);
-                formData.append('description', editor.getData());
-                $.ajax({
-                    url: "{{ route('card.store') }}",
-                    type: "POST",
-                    data: formData,
-                    processData: false,
-                    contentType: false,
-                    success: function(response) {
-                       if(response.status){
+            $.ajax({
+                url: url,
+                type: "POST",
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    if (response.status) {
                         toastr.success(response.message);
                         $('#exampleModal').modal('hide');
-                       }else{
+                        $('#CardForm').trigger('reset');
+                        $('.dropify').dropify().clearElement();
+                        $('#submitCardForm').text('Add Card');
+                        editor.setData('');
+                        table.draw();
+                        $('.AvaiableCountry').val(null).trigger('change');
+                        $('.AvaiableAmount').val(null).trigger('change');
+                        $('#hiddenInput').val('');
+                    } else {
                         toastr.error(response.message);
-                       }
-                       
-                    },
-                    error: function(xhr, status, error) {
-                        toastr.error('Something went wrong!');
+                        console.log(response);
                     }
-                });
-            })
+                },
+                error: function (xhr, status, error) {
+                    toastr.error('Something went wrong!');
+                }
+            });
         });
-    </script>
 
-    
+        $(document).on('click', '#EditCard', function () {
+            let id = $(this).data('id');
+            let card_name = $(this).data('card_name');
+            let type = $(this).data('type');
+            let platform_name = $(this).data('platform_name');
+            let cardCountries = $(this).data('acc'); // Available countries for the card
+            let avaiableAamounts = $(this).data('apv'); // Available price values
+            avaiableAamounts = avaiableAamounts.split(',').map(item => item.replace('[', '').replace(']', '').trim());
+            let price = $(this).data('price');
+            let discount = $(this).data('discount');
+            let seller_name = $(this).data('seller_name');
+            let usage = $(this).data('usage');
+            let description = $(this).data('description');
+            let image = $(this).data('image');
+            let cardType = $(this).data('type');
+            $('#submitCardForm').text('Update Card');
+
+            $('#hiddenInput').val(id);
+            $('#card_name').val(card_name);
+            $('#platform_name').val(platform_name);
+            $('#price').val(price);
+            $('#discount').val(discount);
+            $('#seller_name').val(seller_name);
+            $('#usage').val(usage);
+            editor.setData(description);
+
+            if (image) {
+                let imageUrl = `{{ asset('${image}') }}`;
+                $('#image').attr('data-default-file', imageUrl);
+                $('.dropify').dropify('destroy').dropify();
+                $('#imagePreview').attr('src', imageUrl).show();
+
+            }
+
+            $('.AvaiableCountry').val(cardCountries).trigger('change');
+            $('.AvaiableAmount').val(avaiableAamounts).trigger('change');
+            $('.PlatformName').val(platform_name).trigger('change');
+            $('.CardType').val(cardType).trigger('change');
+        });
+
+        $(document).on('click','.CloseModal', function () {
+            $('#submitCardForm').text('Add Card');
+            $('#CardForm').trigger('reset');
+            $('#hiddenInput').val('');
+            editor.setData('');
+            $('#imagePreview').hide();
+            $('.AvaiableCountry').val('').trigger('change');
+            $('.AvaiableAmount').val('').trigger('change');
+            $('.CardType').val('').trigger('change');
+            
+        });
+
+        $(document).on('click', '.DeleteCard', function () {
+            let id = $(this).data('id');
+           
+
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You want to delete this card!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: "{{ route('card.destroy') }}",
+                        type: "POST",
+                        data: {
+                            id: id,
+                            _token: "{{ csrf_token() }}"
+                        },
+                        success: function (response) {
+                            if (response.status) {
+                                toastr.success(response.message);
+                                table.draw();
+                            } else {
+                                toastr.error(response.message);
+                            }
+                        },
+                        error: function (xhr, status, error) {
+                            toastr.error('Something went wrong!');
+                        }
+                    });
+                }
+            });
+        });
+    });
+</script>
 @endpush
+
 

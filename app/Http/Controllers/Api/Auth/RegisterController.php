@@ -58,7 +58,7 @@ class RegisterController extends Controller {
                 'min:8',
                 'confirmed',
             ],
-            'agree_to_terms' => 'required|boolean',
+         
         ], [
             'password.min' => 'The password must be at least 8 characters long.',
             'gender.in'    => 'The selected gender is invalid.',
@@ -74,7 +74,6 @@ class RegisterController extends Controller {
             $user->name           = $request->input('name');
             $user->email          = $request->input('email');
             $user->password       = Hash::make($request->input('password')); // Hash the password
-            $user->agree_to_terms = $request->input('agree_to_terms');
 
             $user->save();
 
