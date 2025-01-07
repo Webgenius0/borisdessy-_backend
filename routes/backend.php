@@ -17,7 +17,8 @@ Route::controller(BlogController::class)->group(function(){
     Route::get('blog','index')->name('blog.index');
     Route::get('blog-create','create')->name('blog.create');
     Route::post('blog-store','store')->name('blog.store');
+    Route::get('blog-edit/{id}','edit')->name('blog.edit');
     Route::post('blog-update','update')->name('blog.update');
-    Route::post('blog-delete','destroy')->name('blog.destroy');
+    Route::get('blog-delete/{id}','destroy')->name('blog.destroy');
     
 });

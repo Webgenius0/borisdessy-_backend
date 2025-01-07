@@ -5,12 +5,6 @@
 @section('content')
 <!--begin::Toolbar-->
 
-@if (session('success'))
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
-        {{ session('success') }}
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-@endif
 
 <div class="toolbar" id="kt_toolbar">
     <div class="container-fluid d-flex flex-stack flex-wrap flex-sm-nowrap">
@@ -55,10 +49,10 @@
                         <table class="table data-table">
                             <thead>
                                 <tr>
-                                    <th>Serial</th>
+                                    <th>Date</th>
                                     <th>Title</th>
                                     <th>Content</th>
-                                    <th>Created At</th>
+                                    <th>Image</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -73,3 +67,21 @@
     </div>
 </div>
 @endsection
+
+@push('script')
+    <script>
+        $('.data-table').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: "{{ route('blog.index') }}",
+                columns: [
+                    { data: 'created_at', name: 'created_at' },
+                    { data: 'title', name: 'title' },    
+                    { data: 'content', name: 'content' },
+                    { data: 'image', name: 'image' },    
+                    { data: 'action', name: 'action', orderable: false, searchable: false },
+                ]
+            });
+
+    </script>
+@endpush

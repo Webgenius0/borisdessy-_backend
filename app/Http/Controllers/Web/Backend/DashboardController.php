@@ -81,12 +81,11 @@ class DashboardController extends Controller
         ]);
       }
       
-      if($request->hasFile( 'image' ) ) {
-        $destinationPath = 'Card/Images';
-        $file = $request->image;
-        $fileName = time() . '.'.$file->clientExtension();
-        $file->move($destinationPath, $fileName );
-      }
+      if($request->hasfile('image')){
+        $newImage = $request->file('image');
+        $newImagePath = uploadImage($newImage, 'card/images');
+
+    }
 
         $card = Card::create([
             'card_name' => $request->card_name,
@@ -97,7 +96,7 @@ class DashboardController extends Controller
             'seller_name' => $request->seller_name,
             'usage' => $request->usage,
             'description' => $request->description,
-            'image' => 'Card/Images/'.$fileName,
+            'image' => $newImagePath,
         ]);
 
         $card_id = $card->id;
@@ -146,11 +145,23 @@ class DashboardController extends Controller
             ]);
         }
         $card = Card::find($request->id);
-        if($request->hasFile( 'image' ) ) {
-            $destinationPath = 'Card/Images';
-            $file = $request->image;
-            $fileName = time() . '.'.$file->clientExtension();
-            $file->move($destinationPath, $fileName );
+        
+        $newImagePath = $card->image;
+    
+        if ($request->hasFile('image')) {
+            $newImage = $request->file('image');
+    
+            if ($newImage->isValid()) {
+                if ($card->image) {
+                    $previousImagePath = public_path($card->image);
+                    if (file_exists($previousImagePath)) {
+                        unlink($previousImagePath);
+                    }
+                }
+                $newImagePath = uploadImage($newImage, 'blog/images');
+            } else {
+                return back()->withErrors('The uploaded image is invalid.');
+            }
         }
 
         $card->update([
@@ -162,14 +173,11 @@ class DashboardController extends Controller
             'seller_name' => $request->seller_name,
             'usage' => $request->usage,
             'description' => $request->description,
+            'image' => $newImagePath,
            
         ]);
 
-        if($request->hasFile( 'image' ) ) {
-            $card->update([
-                'image' => 'Card/Images/'.$fileName,
-            ]);
-        }
+        
 
         $card_id = $card->id;
 
@@ -197,6 +205,14 @@ class DashboardController extends Controller
 
     public function destroy(Request $request) {
         $card = Card::find($request->id);
+
+        if ($card->image) {
+            $imagePath = public_path($card->image);
+    
+            if (file_exists($imagePath)) {
+                unlink($imagePath);
+            }
+        }
         $card->delete();
         return response()->json([
             'status' => true,
