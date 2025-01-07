@@ -64,8 +64,6 @@ class User extends Authenticatable implements JWTSubject
     protected function casts(): array {
         return [
             'email_verified_at' => 'datetime',
-            'agree_to_terms' => 'boolean',
-            'is_premium' => 'boolean',
             'id' => 'integer',
         ];
     }

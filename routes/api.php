@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\Api\Auth\LoginController;
+use App\Http\Controllers\Api\CardController;
 use App\Http\Controllers\Api\CategoryController;
+use App\Http\Controllers\Api\ReviewController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\SocialAuthController;
 use App\Http\Controllers\Api\Auth\RegisterController;
@@ -62,4 +64,15 @@ Route::group(['middleware' => ['jwt.verify']], function() {
         Route::delete('/delete', 'deleteUser');
     });
 
+    Route::controller(ReviewController::class)->prefix('review')->group(function(){
+        Route::post('/store','StoreReview');
+    });
+
+});
+
+// all cards
+
+Route::controller(CardController::class)->group(function(){
+    Route::get('all/cards','allCards');
+    Route::get('filter/cards','filterCards');
 });

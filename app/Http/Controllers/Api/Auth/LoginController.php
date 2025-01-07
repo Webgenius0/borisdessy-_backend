@@ -70,43 +70,33 @@ class LoginController extends Controller {
      * @return \Illuminate\Http\JsonResponse  JSON response with success or error.
      */
 
-     public function userLogin(Request $request) {
-        $validator = Validator::make($request->all(), [
-            'email' => 'required|email|exists:users,email',
-            'password' => 'required'
-        ]);
-
-        if ($validator->fails()) {
-            return $this->error([], $validator->errors()->first(), 422);
-        }
-
-        $credentials = $request->only('email', 'password');
-
-        $userData = User::where('email', $request->email)->first();
-
-        if ($userData && Hash::check($request->password, $userData->password)) {
-            if($userData->email_verified_at == null) {
-
-                $this->verifyOTP($userData);
-
-                $userData->setAttribute('token', null);
-
-            } else {
-
-                if (!$token = JWTAuth::attempt($credentials)) {
-                    return $this->error([], 'Invalid credentials', 401);
-                }
-
-                $userData = auth()->user();
-
-                $userData->setAttribute('token', $token);
-            }
-        } else {
-            return $this->error([], 'Invalid credentials', 401);
-        }
-
-        return $this->success($userData, 'User authenticated successfully', 200);
-    }
+     public function userLogin(Request $request)
+     {
+         $validator = Validator::make($request->all(), [
+             'email' => 'required|email|exists:users,email',
+             'password' => 'required',
+         ]);
+     
+         if ($validator->fails()) {
+             return $this->error([], $validator->errors()->first(), 422);
+         }
+     
+         $credentials = $request->only('email', 'password');
+     
+         try {
+             if (!$token = JWTAuth::attempt($credentials)) {
+                 return $this->error([], 'Invalid email or password', 401);
+             }
+     
+             $user = auth()->user();
+             $user->setAttribute('token', $token);
+     
+             return $this->success($user, 'User authenticated successfully', 200);
+         } catch (\Exception $e) {
+             return $this->error([], 'Failed to authenticate user', 500);
+         }
+     }
+     
 
     /**
      * Verify Email to send otp

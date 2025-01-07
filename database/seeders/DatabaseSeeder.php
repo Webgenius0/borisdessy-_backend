@@ -20,5 +20,6 @@ class DatabaseSeeder extends Seeder
         $this->call(PlatformSeeder::class);
         $this->call(CountrySeeder::class);
         $this->call(AllPriceValueSeeder::class);
+        $this->call(BlogSeeder::class);
     }
 }

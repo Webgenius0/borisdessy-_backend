@@ -61,7 +61,6 @@ class RegisterController extends Controller {
          
         ], [
             'password.min' => 'The password must be at least 8 characters long.',
-            'gender.in'    => 'The selected gender is invalid.',
         ]);
 
         if ($validator->fails()) {
@@ -73,13 +72,14 @@ class RegisterController extends Controller {
             $user                 = new User();
             $user->name           = $request->input('name');
             $user->email          = $request->input('email');
-            $user->password       = Hash::make($request->input('password')); // Hash the password
+            $user->password       = Hash::make($request->input('password'));
 
             $user->save();
 
-            $this->sendOtp($user);
+           $token = JWTAuth::fromUser($user);
+            $user->setAttribute('token', $token);
 
-            return $this->success($user, 'Verification email sent', 201);
+            return $this->success($user, 'Registration Successfull', 201);
         } catch (\Exception $e) {
             return $this->error([], $e->getMessage(), 500);
         }
