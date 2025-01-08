@@ -19,36 +19,7 @@ class CardSeeder extends Seeder
     {
         // Use Faker to generate fake data
         $faker = Faker::create();
-        // $platforms = [
-        //     [
-        //         'name' => 'STREAM'
-        //     ],
-        //     [
-        //         'name' => 'GOOGLE STORE'
-        //     ],
-        //     [
-        //         'name' => 'APPLE STORE'
-        //     ],
-        //     [
-        //         'name' => 'PLAYSTATION'
-        //     ],
-        //     [
-        //         'name' => 'FORTNITE'
-        //     ],
-        //     [
-        //         'name' => 'ROBLOX'
-        //     ],
-        //     [
-        //         'name' => 'MINECRAFT'
-        //     ],
-        //     [
-        //         'name' => 'PC'
-        //     ],
-        //     [
-        //         'name' => 'MOBILE'
-        //     ],
-        // ];
-        // Insert 10 sample cards
+
         for ($i = 1; $i <= 3; $i++) {
             // Create the card entry
             $card = Card::create([

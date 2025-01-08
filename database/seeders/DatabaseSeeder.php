@@ -21,5 +21,6 @@ class DatabaseSeeder extends Seeder
         $this->call(CountrySeeder::class);
         $this->call(AllPriceValueSeeder::class);
         $this->call(BlogSeeder::class);
+        $this->call(CardSeeder::class);
     }
 }
