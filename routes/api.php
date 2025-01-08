@@ -70,9 +70,15 @@ Route::group(['middleware' => ['jwt.verify']], function() {
 
 });
 
-// all cards
+// public api for all cards
 
 Route::controller(CardController::class)->group(function(){
     Route::get('all/cards','allCards');
     Route::get('filter/cards','filterCards');
+});
+
+// public api for all ratings
+
+Route::controller(ReviewController::class)->group(function(){
+    Route::get('all-rating','allRating');
 });

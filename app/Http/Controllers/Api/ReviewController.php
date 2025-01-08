@@ -30,8 +30,15 @@ class ReviewController extends Controller
         $newReview->user_id = $request->user_id;
         $newReview->rating = $request->rating;
         $newReview->comment = $request->comment;
+        $newReview->save();
 
 
         return $this->success($request->all(), 'Review Create Successful', 201);
+    }
+
+    public function allRating() {
+        $allRating = Review::with('user')->get();
+        
+        return $this->success($allRating, 'All Rating', 200);
     }
 }

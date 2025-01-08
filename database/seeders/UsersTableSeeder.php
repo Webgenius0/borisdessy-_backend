@@ -31,6 +31,7 @@ class UsersTableSeeder extends Seeder
                 'email_verified_at' => now(),
                 'password' => Hash::make('12345678'),
                 'role' => 'user',
+                'avatar' => 'uploads/avatars/images/1.png',
                 'remember_token' => Str::random(10),
                 'created_at' => now(),
             ],
