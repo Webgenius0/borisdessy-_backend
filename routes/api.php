@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\ReviewController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\SocialAuthController;
 use App\Http\Controllers\Api\Auth\RegisterController;
+use App\Http\Controllers\Api\BlogController;
 use App\Http\Controllers\Api\UserController;
 
 /*
@@ -62,6 +63,7 @@ Route::group(['middleware' => ['jwt.verify']], function() {
         Route::post('/data/update', 'userUpdate');
         Route::post('/logout', 'logoutUser');
         Route::delete('/delete', 'deleteUser');
+        Route::post('update-avatar', 'updateAvatar');
     });
 
     Route::controller(ReviewController::class)->prefix('review')->group(function(){
@@ -75,6 +77,9 @@ Route::group(['middleware' => ['jwt.verify']], function() {
 Route::controller(CardController::class)->group(function(){
     Route::get('all/cards','allCards');
     Route::get('filter/cards','filterCards');
+    Route::get('upcoming-vouchers','upcomingVouchers');
+    Route::get('upcoming-cards','upcomingCards');
+
 });
 
 // public api for all ratings
@@ -82,3 +87,12 @@ Route::controller(CardController::class)->group(function(){
 Route::controller(ReviewController::class)->group(function(){
     Route::get('all-rating','allRating');
 });
+
+/**
+ * public api for all blogs
+ * 
+ */
+
+ Route::controller(BlogController::class)->group(function(){
+     Route::get('all/blogs','allBlogs');
+ });

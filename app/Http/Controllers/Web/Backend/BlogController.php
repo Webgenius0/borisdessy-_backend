@@ -61,7 +61,7 @@ class BlogController extends Controller
         }
 
         Blog::create([ 
-            'user_id' => auth()->id(),
+            'user_id' => auth()->user()->id,
             'title' => $request->title,
             'content' => $request->content,
             'image' => $newImagePath,
