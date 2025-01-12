@@ -95,7 +95,8 @@ class CardController extends Controller
             ->with([
                'cardCountries:card_id,name',
                'cardAvaialeAmounts:card_id,value',
-               'reviews.user',
+               'reviews.user:id,name,avatar',
+               'reviews:id,card_id,user_id,rating,comment'
             ])
             ->withAvg('reviews', 'rating')
             ->withCount('reviews')
