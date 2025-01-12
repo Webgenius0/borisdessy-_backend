@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
             $table->foreignId('card_id')->constrained()->cascadeOnDelete();
-            $table->integer('rating');
+            $table->decimal('rating',2,1);
             $table->string('comment');
             $table->timestamps();
         });

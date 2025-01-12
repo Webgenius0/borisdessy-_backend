@@ -16,7 +16,11 @@ class CardController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
      public function allCards() : JsonResponse {
-        $allcards = Card::all();
+        $allcards = Card::withAvg('reviews', 'rating')->get()
+        ->map(function($card){
+                $card->reviews_avg_rating  = round($card->reviews_avg_rating, 1);
+                return $card;
+        });
         return $this->success(
             $allcards,
             'All Cards',
@@ -32,7 +36,13 @@ class CardController extends Controller
      public function filterCards(Request $request) : JsonResponse | Request{
 
        $platform = $request->platform;
-         $cards = Card::where('platform_name', $platform)->get();
+         $cards = Card::where('platform_name', $platform)
+         ->withAvg('reviews', 'rating')
+         ->get()
+         ->map(function($card){
+            $card->reviews_avg_rating = round($card->reviews_avg_rating);
+            return $card;
+         });
         return $this->success(
             $cards,
             'Filtered Cards',
@@ -45,7 +55,13 @@ class CardController extends Controller
       */
 
      public function upcomingVouchers() : JsonResponse {
-       $upcomingVoucher = Card::where('type','voucher')->latest()->take(4)->get();
+       $upcomingVoucher = Card::where('type','voucher')->latest()->take(4)
+       ->withAvg('reviews', 'rating')
+       ->get()
+       ->map(function($card){
+        $card->reviews_avg_rating = round($card->reviews_avg_rating);
+        return $card;
+     });
         return $this->success(
             $upcomingVoucher,
             'Upcoming Vouchers',
@@ -57,7 +73,13 @@ class CardController extends Controller
         * return jsonresponse
         */
      public function upcomingCards() : JsonResponse {
-       $upcomingVoucher = Card::where('type','gift')->latest()->take(4)->get();
+       $upcomingVoucher = Card::where('type','gift')->latest()->take(4)
+         ->withAvg('reviews', 'rating')
+       ->get()
+         ->map(function($card){
+            $card->reviews_avg_rating = round($card->reviews_avg_rating);
+            return $card;
+         });
         return $this->success(
             $upcomingVoucher,
             'Upcoming cards',

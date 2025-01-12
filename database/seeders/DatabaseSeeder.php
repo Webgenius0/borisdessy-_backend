@@ -22,5 +22,6 @@ class DatabaseSeeder extends Seeder
         $this->call(AllPriceValueSeeder::class);
         $this->call(BlogSeeder::class);
         $this->call(CardSeeder::class);
+        $this->call(ReviewSeeder::class);
     }
 }

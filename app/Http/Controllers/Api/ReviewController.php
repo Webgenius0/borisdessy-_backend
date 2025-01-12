@@ -14,7 +14,7 @@ class ReviewController extends Controller
     public function StoreReview(Request $request) {
 
         $validateData = Validator::make($request->all(),[
-            'user_id' => 'required',
+            'user_id' => 'required | unique:reviews,user_id',
             'card_id' => 'required',
             'rating' => 'required',
             'comment' => 'required',
