@@ -79,6 +79,7 @@ Route::controller(CardController::class)->group(function(){
     Route::get('filter/cards','filterCards');
     Route::get('upcoming-vouchers','upcomingVouchers');
     Route::get('upcoming-cards','upcomingCards');
+    Route::get('card-details','cardDetails');
 
 });
 

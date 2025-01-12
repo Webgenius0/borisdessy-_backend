@@ -86,4 +86,21 @@ class CardController extends Controller
             code: 200
         );
      }
+
+        /**
+        * return jsonresponse
+        * @param int $id
+        * @return \Illuminate\Http\JsonResponse | Request
+        */
+
+        public function cardDetails(Request $request) : JsonResponse | Request{
+            $card_id = $request->card_id;
+            
+            $card = Card::where('id',$card_id)->get();
+            return $this->success(
+                $card,
+                'Card Details',
+                code: 200
+            );
+        }
 }
