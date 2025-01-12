@@ -25,7 +25,7 @@ class CardSeeder extends Seeder
             $card = Card::create([
                 'card_name' => 'AMAZON',
                 'type' => 'gift',
-                'platform_name' => 'STREAM',
+                'platform_name' => 'STEAM',
                 'price' => $faker->randomFloat(2, 10, 100),
                 'discount' => $faker->randomFloat(2, 0, 50),
                 'seller_name' => $faker->company,
