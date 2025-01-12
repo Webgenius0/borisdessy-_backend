@@ -23,9 +23,9 @@ class CardSeeder extends Seeder
         for ($i = 1; $i <= 3; $i++) {
             // Create the card entry
             $card = Card::create([
-                'card_name' => $faker->word,
+                'card_name' => 'AMAZON',
                 'type' => 'gift',
-                'platform_name' => 'ROBLOX',
+                'platform_name' => 'STREAM',
                 'price' => $faker->randomFloat(2, 10, 100),
                 'discount' => $faker->randomFloat(2, 0, 50),
                 'seller_name' => $faker->company,
@@ -51,9 +51,9 @@ class CardSeeder extends Seeder
         for ($i = 1; $i <= 3; $i++) {
             // Create the card entry
             $card = Card::create([
-                'card_name' => $faker->word,
+                'card_name' => 'GOOGLE STORE',
                 'type' => 'voucher',
-                'platform_name' =>'APPLE STORE',
+                'platform_name' =>'GOOGLE STORE',
                 'price' => $faker->randomFloat(2, 10, 100),
                 'discount' => $faker->randomFloat(2, 0, 50),
                 'seller_name' => $faker->company,
@@ -79,9 +79,9 @@ class CardSeeder extends Seeder
         for ($i = 1; $i <= 3; $i++) {
             // Create the card entry
             $card = Card::create([
-                'card_name' => $faker->word,
+                'card_name' => 'APPLE STORE',
                 'type' => 'gift',
-                'platform_name' => 'GOOGLE STORE',
+                'platform_name' => 'APPLE STORE',
                 'price' => $faker->randomFloat(2, 10, 100),
                 'discount' => $faker->randomFloat(2, 0, 50),
                 'seller_name' => $faker->company,
@@ -107,35 +107,7 @@ class CardSeeder extends Seeder
         for ($i = 1; $i <= 3; $i++) {
             // Create the card entry
             $card = Card::create([
-                'card_name' => 'PLAYSTATION',
-                'type' => 'gift',
-                'platform_name' => 'GOOGLE STORE',
-                'price' => $faker->randomFloat(2, 10, 100),
-                'discount' => $faker->randomFloat(2, 0, 50),
-                'seller_name' => $faker->company,
-                'usage' => $faker->sentence,
-                'description' => $faker->paragraph,
-                'image' => 'uploads/card/images/2.png', 
-            ]);
-
-            $countryNames = ['Dubai', 'Qatar', 'Saudi Arabia', 'Kuwait', 'Oman']; 
-            foreach ($countryNames as $countryName) {
-                $card->countries()->create([
-                    'name' => $countryName,
-                ]);
-            }
-
-            $availableAmounts = [20, 50, 100, 200, 500]; 
-            foreach ($availableAmounts as $amount) {
-                $card->allPriceValues()->create([
-                    'value' => $amount,
-                ]);
-            }
-        }
-        for ($i = 1; $i <= 3; $i++) {
-            // Create the card entry
-            $card = Card::create([
-                'card_name' => 'PLAYSTATION',
+                'card_name' => 'FORTNITE',
                 'type' => 'gift',
                 'platform_name' => 'FORTNITE',
                 'price' => $faker->randomFloat(2, 10, 100),
@@ -163,7 +135,35 @@ class CardSeeder extends Seeder
         for ($i = 1; $i <= 3; $i++) {
             // Create the card entry
             $card = Card::create([
-                'card_name' => 'PLAYSTATION',
+                'card_name' => 'MINECRAFT',
+                'type' => 'gift',
+                'platform_name' => 'MINECRAFT',
+                'price' => $faker->randomFloat(2, 10, 100),
+                'discount' => $faker->randomFloat(2, 0, 50),
+                'seller_name' => $faker->company,
+                'usage' => $faker->sentence,
+                'description' => $faker->paragraph,
+                'image' => 'uploads/card/images/2.png', 
+            ]);
+
+            $countryNames = ['Dubai', 'Qatar', 'Saudi Arabia', 'Kuwait', 'Oman']; 
+            foreach ($countryNames as $countryName) {
+                $card->countries()->create([
+                    'name' => $countryName,
+                ]);
+            }
+
+            $availableAmounts = [20, 50, 100, 200, 500]; 
+            foreach ($availableAmounts as $amount) {
+                $card->allPriceValues()->create([
+                    'value' => $amount,
+                ]);
+            }
+        }
+        for ($i = 1; $i <= 3; $i++) {
+            // Create the card entry
+            $card = Card::create([
+                'card_name' => 'PC GAME',
                 'type' => 'gift',
                 'platform_name' => 'PC',
                 'price' => $faker->randomFloat(2, 10, 100),
@@ -191,7 +191,7 @@ class CardSeeder extends Seeder
         for ($i = 1; $i <= 3; $i++) {
             // Create the card entry
             $card = Card::create([
-                'card_name' => 'PLAYSTATION',
+                'card_name' => 'MOBILE LEGENDS',
                 'type' => 'gift',
                 'platform_name' => 'MOBILE',
                 'price' => $faker->randomFloat(2, 10, 100),
