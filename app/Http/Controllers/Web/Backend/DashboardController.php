@@ -31,7 +31,7 @@ class DashboardController extends Controller
    
         
         if($request->ajax()){
-            $data = Card::with('countries')->with('allPriceValues')->get();
+            $data = Card::with('cardCountries')->with('cardAvaialeAmounts')->get();
             return DataTables::of($data)
                 ->addColumn('action', function($row){
                     $button = '<button type="button" id="EditCard"  data-bs-toggle="modal" data-bs-target="#exampleModal"
@@ -39,8 +39,8 @@ class DashboardController extends Controller
                     data-card_name="'.$row->card_name.'" 
                     data-type="'.$row->type.'"
                     data-platform_name="'.$row->platform_name.'"
-                    data-acc='.$row->countries->pluck('name').'
-                    data-apv=" '.$row->allPriceValues->pluck('value').' "
+                    data-acc='.$row->cardCountries->pluck('name').'
+                    data-apv=" '.$row->cardAvaialeAmounts->pluck('value').' "
                     data-price="'.$row->price.'"
                     data-discount="'.$row->discount.'"
                     data-seller_name="'.$row->seller_name.'"
@@ -102,14 +102,14 @@ class DashboardController extends Controller
         $card_id = $card->id;
 
         foreach($request->country_name as  $country_name){
-            $card->countries()->create([
+            $card->cardCountries()->create([
                'card_id' => $card_id,
                 'name' => $country_name,
             ]);
         }
 
         foreach($request->avaiable_amounts as  $avaiable_amount){
-            $card->allPriceValues()->create([
+            $card->cardAvaialeAmounts()->create([
                'card_id' => $card_id,
                 'value' => $avaiable_amount,
             ]);
@@ -181,17 +181,17 @@ class DashboardController extends Controller
 
         $card_id = $card->id;
 
-        $card->countries()->delete();
+        $card->cardCountries()->delete();
         foreach($request->country_name as  $country_name){
-            $card->countries()->create([
+            $card->cardCountries()->create([
                 'card_id' => $card_id,
                 'name' => $country_name,
             ]);
         }
 
-        $card->allPriceValues()->delete();
+        $card->cardAvaialeAmounts()->delete();
         foreach($request->avaiable_amounts as  $avaiable_amount){
-            $card->allPriceValues()->create([
+            $card->cardAvaialeAmounts()->create([
                 'card_id' => $card_id,
                 'value' => $avaiable_amount,
             ]);

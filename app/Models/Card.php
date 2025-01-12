@@ -18,12 +18,12 @@ class Card extends Model
         'image',
     ];
 
-    public function countries()
+    public function cardCountries()
     {
         return $this->hasMany(CardCountry::class);
     }
 
-    public function allPriceValues()
+    public function cardAvaialeAmounts()
     {
         return $this->hasMany(CardAvaiableAmount::class);
     }

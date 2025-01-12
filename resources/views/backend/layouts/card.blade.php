@@ -160,6 +160,7 @@
                                 <tr>
                                     <th>Serial</th>
                                     <th>Card Name</th>
+                                    <th>Platform Name</th>
                                     <th>Seller Name</th>
                                     <th>Price</th>
                                     <th>discount</th>
@@ -215,6 +216,7 @@
             columns: [
                 { data: 'id', name: 'id' },
                 { data: 'card_name', name: 'card_name' },
+                { data: 'platform_name', name: 'platform_name' },
                 { data: 'seller_name', name: 'seller_name' },
                 { data: 'price', name: 'price' },
                 { data: 'discount', name: 'discount' },
@@ -247,16 +249,16 @@
                 contentType: false,
                 success: function (response) {
                     if (response.status) {
+                        table.draw();
                         toastr.success(response.message);
                         $('#exampleModal').modal('hide');
-                        $('#CardForm').trigger('reset');
+                        $('#CardForm').trigger('reset')
                         $('.dropify').dropify().clearElement();
                         $('#submitCardForm').text('Add Card');
-                        editor.setData('');
-                        table.draw();
                         $('.AvaiableCountry').val(null).trigger('change');
                         $('.AvaiableAmount').val(null).trigger('change');
                         $('#hiddenInput').val('');
+                        editor.setData('');
                     } else {
                         toastr.error(response.message);
                         console.log(response);
