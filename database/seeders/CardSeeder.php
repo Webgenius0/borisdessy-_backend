@@ -275,5 +275,33 @@ class CardSeeder extends Seeder
                 ]);
             }
         }
+        for ($i = 1; $i <= 10; $i++) {
+            // Create the card entry
+            $card = Card::create([
+                'card_name' => 'PLAYSTATION',
+                'type' => 'gift',
+                'platform_name' => 'PLAYSTATION',
+                'price' => $faker->randomFloat(3, 120, 1000),
+                'discount' => $faker->randomFloat(2, 0, 50),
+                'seller_name' => $faker->name,
+                'usage' => 'GLOBAL',
+                'description' => $faker->paragraph,
+                'image' => 'uploads/card/images/2.png', 
+            ]);
+
+            $countryNames = ['Dubai', 'Qatar', 'Saudi Arabia', 'Kuwait', 'Oman']; 
+            foreach ($countryNames as $countryName) {
+                $card->countries()->create([
+                    'name' => $countryName,
+                ]);
+            }
+
+            $availableAmounts = [20, 50, 100, 200, 500]; 
+            foreach ($availableAmounts as $amount) {
+                $card->allPriceValues()->create([
+                    'value' => $amount,
+                ]);
+            }
+        }
     }
 }
