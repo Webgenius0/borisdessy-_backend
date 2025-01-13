@@ -15,7 +15,7 @@ class PlatformSeeder extends Seeder
     {
         $platforms = [
             [
-                'name' => 'STREAM'
+                'name' => 'STEAM'
             ],
             [
                 'name' => 'GOOGLE STORE'
