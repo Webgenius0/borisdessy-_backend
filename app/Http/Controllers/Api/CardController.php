@@ -102,52 +102,68 @@ class CardController extends Controller
     * @return \Illuminate\Http\JsonResponse
     */
 
-   public function cardDetails(Request $request) : JsonResponse
-   {
-      $card_id = $request->card_id;
+   public function cardDetails(Request $request): JsonResponse
+{
+    $card_id = $request->card_id;
 
-      $card = Card::where('id', $card_id)
-         ->with([
+    $card = Card::where('id', $card_id)
+        ->with([
             'cardCountries:card_id,name',
             'cardAvaialeAmounts:card_id,value',
             'reviews.user:id,name,avatar',
             'reviews:id,card_id,user_id,rating,comment'
-         ])
-         ->withAvg('reviews', 'rating')
-         ->withCount('reviews')
-         ->first();
-      $one_star = $card->reviews->where('rating', 1)->count() / $card->reviews->count() * 100;
-      $two_star = $card->reviews->where('rating', 2)->count() / $card->reviews->count() * 100;
-      $three_star = $card->reviews->where('rating', 3)->count() / $card->reviews->count() * 100;
-      $four_star = $card->reviews->where('rating', 4)->count() / $card->reviews->count() * 100;
-      $five_star = $card->reviews->where('rating', 5)->count() / $card->reviews->count() * 100;
-      $reviews = [
-         'one_star' => round($one_star, 1),
-         'two_star' => round($two_star, 1),
-         'three_star' => round($three_star, 1),
-         'four_star' => round($four_star, 1),
-         'five_star' => round($five_star, 1),
-      ];
+        ])
+        ->withAvg('reviews', 'rating')
+        ->withCount('reviews')
+        ->first();
 
-      $card_type = $card->type;
+    if (!$card) {
+        return $this->error('Card not found', code: 404);
+    }
 
-      $othersProduct = Card::where('type',$card_type)->take(15)->withAvg('reviews', 'rating')->get()
-      ->map(function ($card) {
-         $card->reviews_avg_rating = round($card->reviews_avg_rating);
-         return $card;
-      });
-      $details = [
-         'card' => $card,
-         'reviews' => $reviews,
-         'othersProduct' => $othersProduct,
-      ];
+    $total_reviews = $card->reviews->count();
+    $reviews = [
+        'one_star' => 0,
+        'two_star' => 0,
+        'three_star' => 0,
+        'four_star' => 0,
+        'five_star' => 0,
+    ];
 
-      return $this->success(
-         $details,
-         'Card Details',
-         code: 200
-      );
-   }
+    if ($total_reviews > 0) {
+        $reviews = [
+            'one_star' => round($card->reviews->where('rating', 1)->count() / $total_reviews * 100, 1),
+            'two_star' => round($card->reviews->where('rating', 2)->count() / $total_reviews * 100, 1),
+            'three_star' => round($card->reviews->where('rating', 3)->count() / $total_reviews * 100, 1),
+            'four_star' => round($card->reviews->where('rating', 4)->count() / $total_reviews * 100, 1),
+            'five_star' => round($card->reviews->where('rating', 5)->count() / $total_reviews * 100, 1),
+        ];
+    }
+
+    $card_type = $card->type;
+
+    $othersProduct = Card::where('type', $card_type)
+        ->take(15)
+        ->withAvg('reviews', 'rating')
+        ->get()
+        ->map(function ($card) {
+            $card->reviews_avg_rating = round($card->reviews_avg_rating);
+            return $card;
+        });
+
+    $details = [
+        'card' => $card,
+        'reviews' => $reviews,
+        'othersProduct' => $othersProduct,
+    ];
+
+    return $this->success(
+        $details,
+        'Card Details',
+        code: 200
+    );
+}
+
 
       /**
     * return jsonresponse
