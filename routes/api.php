@@ -63,7 +63,7 @@ Route::group(['middleware' => ['jwt.verify']], function() {
         Route::post('/data/update', 'userUpdate');
         Route::post('/logout', 'logoutUser');
         Route::delete('/delete', 'deleteUser');
-        Route::post('update-avatar', 'updateAvatar');
+        Route::post('/update-avatar', 'updateAvatar');
     });
 
     Route::controller(ReviewController::class)->prefix('review')->group(function(){
@@ -81,6 +81,8 @@ Route::controller(CardController::class)->group(function(){
     Route::get('upcoming-cards','upcomingCards');
     Route::get('card-details','cardDetails');
 
+    // global search
+    Route::get('global-search','globalSearch');
 });
 
 // public api for all ratings

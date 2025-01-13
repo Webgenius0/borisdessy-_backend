@@ -131,4 +131,52 @@ class UserController extends Controller {
             return $this->error([], $e->getMessage(), 500);
         }
     }
+
+        /**
+     * Logout the authenticated user's account
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\JsonResponse JSON response with success or error.
+     */
+
+    public function updateAvatar(Request $request) {
+   
+        $validator = Validator::make($request->all(), [
+            'avatar'  => 'nullable|image|mimes:jpeg,png,jpg,svg|max:5120',
+        ]);
+
+        if ($validator->fails()) {
+            return $this->error($validator->errors(), "Validation Error", 422);
+        }
+
+        try {
+            $user = auth()->user();
+            if (!$user) {
+                return $this->error([], "User Not Found", 404);
+            }
+
+            if ($request->hasFile('avatar')) {
+
+                if ($user->avatar) {
+                    $previousImagePath = public_path($user->avatar);
+                    if (file_exists($previousImagePath)) {
+                        unlink($previousImagePath);
+                    }
+                }
+
+                $image     = $request->file('avatar');
+                $imageName = uploadImage($image, 'User/Avatar');
+            } else {
+                $imageName = $user->avatar;
+            }
+            $user->avatar  = $imageName;
+
+            $user->save();
+
+            return $this->success($user, 'Profile updated successfully', 200);
+        } catch (\Exception $e) {
+            return $this->error([], $e->getMessage(), 500);
+        }
+    }
+
 }
