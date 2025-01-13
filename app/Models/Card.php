@@ -16,6 +16,7 @@ class Card extends Model
         'usage',
         'description',
         'image',
+        'stock',
     ];
 
     public function cardCountries()

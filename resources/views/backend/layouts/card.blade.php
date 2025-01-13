@@ -116,12 +116,12 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="seller_name" class="form-label">Seller_name</label>
+                        <label for="seller_name" class="form-label">Seller Name</label>
                         <input type="text" class="form-control" id="seller_name" aria-describedby="seller_name" name="seller_name" value="{{old('seller_name')}}" >
                     </div>
 
                     <div class="mb-3">
-                        <label for="usage" class="form-label">usage</label>
+                        <label for="usage" class="form-label">Usage</label>
                         <input type="text" class="form-control" id="usage" aria-describedby="nameHelp" name="usage" value="{{old('usage')}}" >
                     </div>
 
@@ -135,6 +135,11 @@
                     <label for="image" class="form-label">Image</label>
                     <input type="file" id="image" class="dropify" name="image" data-default-file="" />
                     <img src="" id="imagePreview" style="display: none;" alt="Image Preview" class="img-fluid mt-2">
+                </div>
+
+                <div class="mb-3">
+                        <label for="stock" class="form-label">Stock</label>
+                        <input type="text" class="form-control" id="stock" aria-describedby="stock" name="stock" value="{{old('stock')}}" >
                 </div>
                   
                 </form>
@@ -160,6 +165,7 @@
                                 <tr>
                                     <th>Serial</th>
                                     <th>Card Name</th>
+                                    <th>Stock</th>
                                     <th>Platform Name</th>
                                     <th>Seller Name</th>
                                     <th>Price</th>
@@ -216,6 +222,7 @@
             columns: [
                 { data: 'id', name: 'id' },
                 { data: 'card_name', name: 'card_name' },
+                { data: 'stock', name: 'stock' },
                 { data: 'platform_name', name: 'platform_name' },
                 { data: 'seller_name', name: 'seller_name' },
                 { data: 'price', name: 'price' },
@@ -285,6 +292,7 @@
             let description = $(this).data('description');
             let image = $(this).data('image');
             let cardType = $(this).data('type');
+            let stock = $(this).data('stock');
             $('#submitCardForm').text('Update Card');
 
             $('#hiddenInput').val(id);
@@ -294,6 +302,7 @@
             $('#discount').val(discount);
             $('#seller_name').val(seller_name);
             $('#usage').val(usage);
+            $('#stock').val(stock);
             editor.setData(description);
 
             if (image) {

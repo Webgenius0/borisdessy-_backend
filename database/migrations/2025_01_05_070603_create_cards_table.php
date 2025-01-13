@@ -22,6 +22,7 @@ return new class extends Migration
             $table->longText('description');
             $table->string('image');
             $table->enum('type',['voucher','gift']);
+            $table->string('stock');
             $table->timestamps();
         });
     }

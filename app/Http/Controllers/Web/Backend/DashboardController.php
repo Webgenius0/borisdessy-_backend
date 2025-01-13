@@ -48,6 +48,7 @@ class DashboardController extends Controller
                     data-description="'.$row->description.'"
                     data-image="'.$row->image.'"
                     data-card-type "'.$row->type.'"
+                    data-stock = "'.$row->stock.'"
                     class="edit btn btn-primary btn-sm">Edit</button>';
                     $button .= '&nbsp;&nbsp;&nbsp;<button type="button" data-id="'.$row->id.'" class="DeleteCard btn btn-danger btn-sm">Delete</button>';
                     return $button;
@@ -73,6 +74,7 @@ class DashboardController extends Controller
         'usage' => 'required',
         'description' => 'required',
         'image' => 'required',
+        'stock' => 'required',
       ]);
       if ($validateData->fails()) {
         return response()->json([
@@ -97,6 +99,7 @@ class DashboardController extends Controller
             'usage' => $request->usage,
             'description' => $request->description,
             'image' => $newImagePath,
+            'stock' => $request->stock,
         ]);
 
         $card_id = $card->id;
@@ -137,6 +140,7 @@ class DashboardController extends Controller
             'usage' => 'required',
             'description' => 'required',
             'image' => 'nullable',
+            'stock' => 'required',
         ]);
         if ($validateData->fails()) {
             return response()->json([
@@ -174,6 +178,8 @@ class DashboardController extends Controller
             'usage' => $request->usage,
             'description' => $request->description,
             'image' => $newImagePath,
+            'stock' => $request->stock,
+
            
         ]);
 

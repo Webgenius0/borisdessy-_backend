@@ -31,7 +31,8 @@ class CardSeeder extends Seeder
                 'seller_name' => $faker->name,
                 'usage' => 'GLOBAL',
                 'description' => $faker->paragraph,
-                'image' => 'uploads/card/images/1.png', 
+                'image' => 'uploads/card/images/1.png',
+                'stock' => 100, 
             ]);
 
             $countryNames = ['USA', 'Canada', 'UK', 'Germany', 'France']; 
@@ -59,7 +60,8 @@ class CardSeeder extends Seeder
                 'seller_name' => $faker->name,
                 'usage' => 'GLOBAL',
                 'description' => $faker->paragraph,
-                'image' => 'uploads/card/images/2.png', 
+                'image' => 'uploads/card/images/2.png',
+                'stock' => 100, 
             ]);
 
             $countryNames = ['Bangladesh', 'india', 'pakistan', 'nepal', 'bhutan']; 
@@ -87,7 +89,8 @@ class CardSeeder extends Seeder
                 'seller_name' => $faker->name,
                 'usage' => 'GLOBAL',
                 'description' => $faker->paragraph,
-                'image' => 'uploads/card/images/2.png', 
+                'image' => 'uploads/card/images/2.png',
+                'stock' => 100, 
             ]);
 
             $countryNames = ['China', 'Japan', 'Korea', 'Vietnam', 'Thailand']; 
@@ -115,7 +118,8 @@ class CardSeeder extends Seeder
                 'seller_name' => $faker->name,
                 'usage' => 'GLOBAL',
                 'description' => $faker->paragraph,
-                'image' => 'uploads/card/images/2.png', 
+                'image' => 'uploads/card/images/2.png',
+                'stock' => 100, 
             ]);
 
             $countryNames = ['Dubai', 'Qatar', 'Saudi Arabia', 'Kuwait', 'Oman']; 
@@ -144,7 +148,8 @@ class CardSeeder extends Seeder
                 'seller_name' => $faker->name,
                 'usage' => 'GLOBAL',
                 'description' => $faker->paragraph,
-                'image' => 'uploads/card/images/2.png', 
+                'image' => 'uploads/card/images/2.png',
+                'stock' => 100, 
             ]);
 
             $countryNames = ['Dubai', 'Qatar', 'Saudi Arabia', 'Kuwait', 'Oman']; 
@@ -172,7 +177,8 @@ class CardSeeder extends Seeder
                 'seller_name' => $faker->name,
                 'usage' => 'GLOBAL',
                 'description' => $faker->paragraph,
-                'image' => 'uploads/card/images/2.png', 
+                'image' => 'uploads/card/images/2.png',
+                'stock' => 100, 
             ]);
 
             $countryNames = ['Dubai', 'Qatar', 'Saudi Arabia', 'Kuwait', 'Oman']; 
@@ -202,7 +208,8 @@ class CardSeeder extends Seeder
                 'seller_name' => $faker->name,
                 'usage' => 'GLOBAL',
                 'description' => $faker->paragraph,
-                'image' => 'uploads/card/images/2.png', 
+                'image' => 'uploads/card/images/2.png',
+                'stock' => 100, 
             ]);
 
             $countryNames = ['Dubai', 'Qatar', 'Saudi Arabia', 'Kuwait', 'Oman']; 
@@ -230,7 +237,8 @@ class CardSeeder extends Seeder
                 'seller_name' => $faker->name,
                 'usage' => 'GLOBAL',
                 'description' => $faker->paragraph,
-                'image' => 'uploads/card/images/2.png', 
+                'image' => 'uploads/card/images/2.png',
+                'stock' => 100, 
             ]);
 
             $countryNames = ['Dubai', 'Qatar', 'Saudi Arabia', 'Kuwait', 'Oman']; 
@@ -258,7 +266,8 @@ class CardSeeder extends Seeder
                 'seller_name' => $faker->name,
                 'usage' => 'GLOBAL',
                 'description' => $faker->paragraph,
-                'image' => 'uploads/card/images/2.png', 
+                'image' => 'uploads/card/images/2.png',
+                'stock' => 100, 
             ]);
 
             $countryNames = ['Dubai', 'Qatar', 'Saudi Arabia', 'Kuwait', 'Oman']; 
@@ -286,7 +295,8 @@ class CardSeeder extends Seeder
                 'seller_name' => $faker->name,
                 'usage' => 'GLOBAL',
                 'description' => $faker->paragraph,
-                'image' => 'uploads/card/images/2.png', 
+                'image' => 'uploads/card/images/2.png',
+                'stock' => 100, 
             ]);
 
             $countryNames = ['Dubai', 'Qatar', 'Saudi Arabia', 'Kuwait', 'Oman']; 
