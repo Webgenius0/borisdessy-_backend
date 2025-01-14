@@ -65,10 +65,7 @@ class OrderController extends Controller
             ]);
             
         }
-        
-        return $this->success([
-            'order' => $order,
-            'order_cards' => $orderCards
-        ], 'Order Created Successfully', 200);
+      
+        return $this->success(message:'Order Created Successfully', code: 201);
     }        
 }

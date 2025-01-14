@@ -5,7 +5,7 @@ use Illuminate\Http\Request;
 
 trait ApiResponse
 {
-    public function success($data, $message = null, $code = 200)
+    public function success($data = '', $message = null, $code = 200)
     {
         return response()->json([
             'success' => true,
