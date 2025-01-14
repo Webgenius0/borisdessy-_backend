@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Card;
 use App\Traits\ApiResponse;
+use Illuminate\Container\Attributes\Log;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -121,24 +122,30 @@ class CardController extends Controller
         return $this->error('Card not found', code: 404);
     }
 
-    $total_reviews = $card->reviews->count();
-    $reviews = [
-        'one_star' => 0,
-        'two_star' => 0,
-        'three_star' => 0,
-        'four_star' => 0,
-        'five_star' => 0,
-    ];
 
-    if ($total_reviews > 0) {
-        $reviews = [
-            'one_star' => round($card->reviews->where('rating', 1)->count() / $total_reviews * 100, 1),
-            'two_star' => round($card->reviews->where('rating', 2)->count() / $total_reviews * 100, 1),
-            'three_star' => round($card->reviews->where('rating', 3)->count() / $total_reviews * 100, 1),
-            'four_star' => round($card->reviews->where('rating', 4)->count() / $total_reviews * 100, 1),
-            'five_star' => round($card->reviews->where('rating', 5)->count() / $total_reviews * 100, 1),
-        ];
-    }
+
+    $total_reviews = $card->reviews->count();
+   
+      $total_reviews = $card->reviews->count();
+
+      $total_reviews = $card->reviews->count();
+
+      if ($total_reviews > 0) {
+          $reviews = collect([1.0, 2.0, 3.0, 4.0, 5.0])->map(function ($value) use ($card, $total_reviews) {
+              $count = $card->reviews->filter(function ($review) use ($value) {
+                  return round($review->rating) === $value; 
+              })->count();
+      
+      
+              return [
+                  'value' => $value,
+                  'reviewPercentages' => $total_reviews > 0 ? round(($count / $total_reviews) * 100) . '%' : '0%',
+              ];
+          });
+      } else {
+          $reviews = collect([]); 
+      }
+      
 
     $card_type = $card->type;
 

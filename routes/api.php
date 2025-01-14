@@ -8,7 +8,10 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\SocialAuthController;
 use App\Http\Controllers\Api\Auth\RegisterController;
 use App\Http\Controllers\Api\BlogController;
+use App\Http\Controllers\Api\TransactionHistoryController;
 use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Api\WalletController;
+use App\Models\TransactionHistory;
 
 /*
 |--------------------------------------------------------------------------
@@ -99,3 +102,30 @@ Route::controller(ReviewController::class)->group(function(){
  Route::controller(BlogController::class)->group(function(){
      Route::get('all/blogs','allBlogs');
  });
+
+
+ /**
+  * user wallet api
+  */
+
+  Route::group(['middleware' => ['jwt.verify']], function() {
+
+    Route::controller(WalletController::class)->prefix('users')->group(function () {
+        Route::get('user-balance', 'UserBalance');
+     
+    });
+
+});
+
+/**
+ * User Transaction History
+ */
+
+  Route::group(['middleware' => ['jwt.verify']], function() {
+
+    Route::controller(TransactionHistoryController::class)->prefix('users')->group(function () {
+        Route::get('transaction-history', 'transactionHistory');
+     
+    });
+
+});

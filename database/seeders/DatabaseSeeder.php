@@ -23,5 +23,7 @@ class DatabaseSeeder extends Seeder
         $this->call(BlogSeeder::class);
         $this->call(CardSeeder::class);
         $this->call(ReviewSeeder::class);
+        $this->call(WalletSeeder::class);
+        $this->call(TransactionHistorySeeder::class);
     }
 }
