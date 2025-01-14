@@ -48,8 +48,6 @@ class User extends Authenticatable implements JWTSubject
         'remember_token',
         'email_verified_at',
         'role',
-        'provider',
-        'provider_id',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -79,6 +77,9 @@ class User extends Authenticatable implements JWTSubject
     public function reviews(): HasMany
     {
         return $this->hasMany(Review::class);
+    }
+    public function order()  {
+        return $this->hasMany(Order::class);
     }
 
 }

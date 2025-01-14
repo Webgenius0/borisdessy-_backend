@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\SocialAuthController;
 use App\Http\Controllers\Api\Auth\RegisterController;
 use App\Http\Controllers\Api\BlogController;
+use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\TransactionHistoryController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\WalletController;
@@ -116,6 +117,22 @@ Route::controller(ReviewController::class)->group(function(){
     });
 
 });
+
+/**
+ * User Order History
+ */
+
+  Route::group(['middleware' => ['jwt.verify']], function() {
+
+    Route::controller(OrderController::class)->prefix('users')->group(function () {
+        Route::post('create-order', 'createOrder');
+        Route::get('order-history', 'orderHistory');
+
+     
+    });
+
+});
+
 
 /**
  * User Transaction History

@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\TransactionHistory;
-use Illuminate\Http\Request;
 use App\Traits\ApiResponse;
 
 class TransactionHistoryController extends Controller

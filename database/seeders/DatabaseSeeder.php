@@ -25,6 +25,8 @@ class DatabaseSeeder extends Seeder
         $this->call(ReviewSeeder::class);
         $this->call(WalletSeeder::class);
         $this->call(TransactionHistorySeeder::class);
-        $this->call(PurchaseHistorySeeder::class);
+        $this->call(OrderSeeder::class);
+        $this->call(OrderCardSeeder::class);
+        
     }
 }

@@ -7,18 +7,28 @@ use App\Models\Review;
 use Illuminate\Http\Request;
 use App\Traits\ApiResponse;
 use Illuminate\Support\Facades\Validator;
+use DB;
 
 class ReviewController extends Controller
 {
     use ApiResponse;
     public function StoreReview(Request $request) {
 
-        $validateData = Validator::make($request->all(),[
-            'user_id' => 'required | unique:reviews,user_id',
-            'card_id' => 'required',
-            'rating' => 'required',
-            'comment' => 'required',
-        ]);
+        $validateData = Validator::make($request->all(), [
+            'user_id' => 'required|exists:users,id',
+            'card_id' => 'required|exists:cards,id',
+            'rating' => 'required|integer|min:1|max:5',
+            'comment' => 'required|string|max:255',
+        ])->after(function ($validator) use ($request) {
+            $existingReview = DB::table('reviews')
+                ->where('user_id', $request->user_id)
+                ->where('card_id', $request->card_id)
+                ->first();
+        
+            if ($existingReview) {
+                $validator->errors()->add('card_id', 'You have already reviewed this card.');
+            }
+        });
 
         if($validateData->fails()) {
             return $this->error($validateData->errors(), 'Validation Error', 422);
