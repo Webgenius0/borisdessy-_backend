@@ -14,12 +14,12 @@ class ReviewSeeder extends Seeder
     {
         $faker = \Faker\Factory::create();
 
-        for ($i = 0; $i < 300; $i++) {
+        for ($i = 0; $i < 700; $i++) {
             \App\Models\Review::create([
-                'user_id' => $faker->numberBetween(1, 18),
+                'user_id' => $faker->numberBetween(2, 22),
                 'card_id' => $faker->numberBetween(1, 99),
                 'rating' => $faker->randomFloat(1, 1, 5),
-                'comment' => $faker->sentence,
+                'comment' => $faker->paragraph(5),
             ]);
         }
     }
