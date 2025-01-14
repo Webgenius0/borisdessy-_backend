@@ -18,7 +18,7 @@ class ReviewController extends Controller
             'user_id' => 'required|exists:users,id',
             'card_id' => 'required|exists:cards,id',
             'rating' => 'required|integer|min:1|max:5',
-            'comment' => 'required|string|max:255',
+            'comment' => 'required|string|max:220',
         ])->after(function ($validator) use ($request) {
             $existingReview = DB::table('reviews')
                 ->where('user_id', $request->user_id)

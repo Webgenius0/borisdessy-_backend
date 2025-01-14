@@ -6,6 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class OrderCard extends Model
 {
-    protected $gaurded = [];
+    protected $guarded = [];
   
 }
