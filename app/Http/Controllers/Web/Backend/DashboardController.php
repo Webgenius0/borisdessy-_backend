@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\AllPriceValue;
 use App\Models\Card;
 use App\Models\Country;
+use App\Models\Order;
 use App\Models\Platform;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -225,4 +226,49 @@ class DashboardController extends Controller
             'message' => 'Card Deleted Successfully',
         ]);
     }
+    public function orders(Request $request)
+    {
+        if ($request->ajax()) {
+            $data = Order::with(['user', 'orderCard'])->get();
+    
+            return DataTables::of($data)
+            ->addColumn('status', function ($row) {
+                if (!isset($row->status)) {
+                    return '<span class="badge badge-secondary">Unknown</span>';
+                }
+            
+                $statuses = [
+                    'pending' => 'Pending',
+                    'completed' => 'Completed',
+                    'cancelled' => 'Cancelled',
+                ];
+            
+                $html = '<select class="form-control change-status" data-id="' . $row->id . '">';
+                foreach ($statuses as $key => $label) {
+                    $selected = $row->status === $key ? 'selected' : '';
+                    $html .= '<option value="' . $key . '" ' . $selected . '>' . $label . '</option>';
+                }
+                $html .= '</select>';
+            
+                return $html;
+            })
+            ->rawColumns(['status']) 
+            ->make(true);
+        }
+        return view('backend.layouts.order');
+    }
+
+    public function orderStatusUpdate(Request $request)
+    {
+        $order = Order::find($request->id);
+        $order->update([
+            'status' => $request->status,
+        ]);
+    
+        return response()->json([
+            'status' => true,
+            'message' => 'Order status updated successfully',
+        ]);
+    }
+    
 }

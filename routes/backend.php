@@ -11,6 +11,9 @@ Route::controller(DashboardController::class)->group(function(){
     Route::post('card-store','store')->name('card.store');
     Route::post('card-update','update')->name('card.update');
     Route::post('card-delete','destroy')->name('card.destroy');
+    Route::get('card.orders','orders')->name('card.orders');
+
+    Route::post('card/order/status/update','orderStatusUpdate')->name('card.order.status.update');
 });
 
 Route::controller(BlogController::class)->group(function(){

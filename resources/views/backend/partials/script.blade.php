@@ -143,13 +143,13 @@
 {{-- dropify end --}}
 
 <!-- set csrf token  -->
-<!-- <script>
+<script>
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
-</script> -->
+</script>
 
 <!-- Classic Editor -->
 <script>
