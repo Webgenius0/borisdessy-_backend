@@ -178,12 +178,12 @@ class CardController extends Controller
     * @return \Illuminate\Http\JsonResponse
     */
 
-   public function globalSearch(Request $request) : JsonResponse
+   public function searchByCardType(Request $request) : JsonResponse
    {
 
-      $search = $request->search;
+      $type = $request->type;
 
-      $card = Card::where('card_name', 'like', "%$search%")->orWhere('platform_name', 'like', "%$search%")->orWhere('type', 'like', "%$search%")
+      $card = Card::where('type', $type)
          ->withAvg('reviews', 'rating')
          ->get()
          ->map(function ($card) {

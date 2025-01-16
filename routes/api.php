@@ -86,7 +86,7 @@ Route::controller(CardController::class)->group(function(){
     Route::get('card-details','cardDetails');
 
     // global search
-    Route::get('global-search','globalSearch');
+    Route::get('search-by-card-type','searchByCardType');
 });
 
 // public api for all ratings
