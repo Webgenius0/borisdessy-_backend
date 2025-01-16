@@ -30,9 +30,11 @@ class OrderController extends Controller
         $validatedData = Validator::make($request->all(), [
             'order_cards' => 'required|array',
             'order_cards.*.card_id' => 'required|exists:cards,id',
-            'order_cards.*.quantity' => 'required|integer|min:1',
-            'total_price' => 'required|numeric', 
+            'order_cards.*.quantity' => 'required',
+            'total_price' => 'required', 
             'note' => 'nullable|string',
+            'email' => 'required|email',
+            'country' => 'required|string',
             'delivery_date' => 'nullable|date',
         ]);
         
@@ -53,6 +55,8 @@ class OrderController extends Controller
             'total_price' => $validatedData->validated()['total_price'],
             'status' => 'pending',
             'note' => $validatedData->validated()['note'] ?? null,
+            'email' => $validatedData->validated()['email'] ?? null,
+            'country' => $validatedData->validated()['country'] ?? null,
         ]);
         
         $orderCards = [];
