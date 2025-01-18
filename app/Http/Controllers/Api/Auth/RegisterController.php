@@ -64,7 +64,7 @@ class RegisterController extends Controller {
         ]);
 
         if ($validator->fails()) {
-            return $this->error($validator->errors(), "Validation Error", 422);
+            return $this->error($validator->errors()->first(), "Validation Error", 422);
         }
 
         try {
