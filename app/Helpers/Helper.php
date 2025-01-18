@@ -24,7 +24,7 @@ function uploadImage($file, $folder) {
     }
     $file->move($path, $imageName);
     return 'uploads/' . $folder . '/' . $imageName;
-}
+}    
 
 
 /**
