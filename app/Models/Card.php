@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Stripe\Issuing\Cardholder;
 
 class Card extends Model
 {
@@ -31,5 +32,9 @@ class Card extends Model
     public function reviews()
     {
         return $this->hasMany(Review::class);
+    }
+
+    public function orderCards() {
+        return $this->hasMany(OrderCard::class);
     }
 }

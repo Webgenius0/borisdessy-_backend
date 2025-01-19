@@ -84,6 +84,8 @@ Route::controller(CardController::class)->group(function(){
     Route::get('upcoming-vouchers','upcomingVouchers');
     Route::get('upcoming-cards','upcomingCards');
     Route::get('card-details','cardDetails');
+    Route::get('best-selling-vouchers','bestSellingVouchers');
+    Route::get('best-selling-cards','bestSellingCards');
 
     // global search
     Route::get('search-by-card-type','searchByCardType');
@@ -101,7 +103,8 @@ Route::controller(ReviewController::class)->group(function(){
  */
 
  Route::controller(BlogController::class)->group(function(){
-     Route::get('all/blogs','allBlogs');
+    Route::get('all/blogs','allBlogs');
+    Route::get('blog-details','blogDetails');
  });
 
 

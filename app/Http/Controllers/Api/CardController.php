@@ -8,6 +8,7 @@ use App\Traits\ApiResponse;
 use Illuminate\Container\Attributes\Log;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CardController extends Controller
 {
@@ -197,4 +198,57 @@ class CardController extends Controller
          code: 200
       );
    }
+
+   /**
+    * return jsonresponse
+    * @param Request $request
+    * @return \Illuminate\Http\JsonResponse
+    */
+    public function bestSellingVouchers(Request $request): JsonResponse
+    {
+        $bestSellingVouchers = Card::where('type', 'voucher')
+            ->withAvg('reviews', 'rating')
+            ->withCount(['orderCards as sales_count' => function ($query) {
+                $query->select(DB::raw('count(*)')); 
+            }])
+            ->orderByDesc('sales_count') 
+            ->get()
+            ->map(function ($card) {
+                $card->reviews_avg_rating = round($card->reviews_avg_rating, 1); 
+                return $card;
+            });
+    
+        return $this->success(
+            $bestSellingVouchers,
+            'Best Selling Vouchers',
+            code: 200
+        );
+    }
+
+      /**
+      * return jsonresponse
+      * @param Request $request
+      * @return \Illuminate\Http\JsonResponse
+      */
+      public function bestSellingCards(Request $request): JsonResponse
+      {
+          $bestSellingCards = Card::where('type', 'gift')
+              ->withAvg('reviews', 'rating')
+              ->withCount(['orderCards as sales_count' => function ($query) {
+                  $query->select(DB::raw('count(*)')); 
+              }])
+              ->orderByDesc('sales_count') 
+              ->get()
+              ->map(function ($card) {
+                  $card->reviews_avg_rating = round($card->reviews_avg_rating, 1); 
+                  return $card;
+              });
+      
+          return $this->success(
+              $bestSellingCards,
+              'Best Selling Cards',
+              code: 200
+          );
+      }
+    
 }
